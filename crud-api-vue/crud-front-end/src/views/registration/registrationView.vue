@@ -10,7 +10,7 @@
     
     <div class="card setup">
         <h1 class="display-5">Register user</h1>
-        <form  class="pt-2" @submit.prevent="postData">
+        <form  class="pt-2" @submit.prevent="postData" >
             <div class="">
                 <label for="firstName" class="label">first name:</label>
                 <input type="text" placeholder="enter your first name"  class="form-control" v-model="formData.fname">
@@ -33,38 +33,41 @@
             </div>
         </form>
     </div>
+    <router-link to="/" class="btn btn-secondary">back</router-link>
+
 </body>
 </html>
 </template>
 
 <script>
-import axios from 'axios';
+    import axios from 'axios';
 
-export default{
-    data(){
-        return {
-            formData:{
-                fname:'',
-                lname:'',
-                email:'',
-                password:'',
-            },
-        };
-    },
-    methods:{
-        postData(){
-            const apiUrl='http://127.0.0.1:8000/api/register';
-
-            axios.post(apiUrl,this.formData)
-            .then(response=>{
-                console.log('data send successfully',response.data);
-            })
-            .catch(error=>{
-                console.error('Error sending dta',error);
-            });
+    export default{
+        data(){
+            return{
+                formData:{
+                    fname:'',
+                    lname:'',
+                    email:'',
+                    password:'',
+                },
+            };
         },
-    },
-};
+
+        methods:{
+            postData(){
+                const apiUrl='http://127.0.0.1:8000/api/register';
+
+                axios.post(apiUrl,this.formData)
+                .then(response=>{
+                    console.log('data send successfully',response.data);
+                }).catch(error=>{
+                    console.error('error sending data',error);
+                });
+            },
+        },
+
+    };
 </script>
 
 <style scoped>
@@ -82,7 +85,7 @@ export default{
     display: flex;
 }
 .bodyCls{
-    display: flex;
+   
     justify-content: center;
 }
 
