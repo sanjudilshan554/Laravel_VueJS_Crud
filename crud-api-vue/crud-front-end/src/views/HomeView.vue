@@ -30,8 +30,10 @@
               <td scope="row">{{ item.email }}</td>
               <td scope="row">{{ item.password }}</td>
               <td scope="row">
-                <RouterLink to="update" class="btn btn-primary">update</RouterLink>  
-                <RouterLink to="delete" class="btn btn-danger">delete</RouterLink>  
+                <RouterLink :to="{ name: 'update', params: { id: item.id } }" class="btn btn-primary">update</RouterLink>
+                <!-- <RouterLink to="{name:'update', params:{id: item.id}}" class="btn btn-primary">update</RouterLink>   -->
+                <button @click="deleteUser(item.id)" class="btn btn-danger">delete</button>  
+                
               </td>
             </tr>
           </tbody>
@@ -60,10 +62,22 @@
             axios.get('http://127.0.0.1:8000/api/getUsers')
           .then(response=>{
             this.items=response.data.data;
+            
           })
           .catch(error=>{
             console.error(error);
           });
+        },
+
+        deleteUser(id){
+          const Newid=id;
+            axios.post(`http://127.0.0.1:8000/api/delete/${Newid}`)
+            .then(response=>{
+              console.log('message',response.data);
+              location.reload();
+            }).catch(error=>{
+              console.error(error);
+            });
         },
         
       },
